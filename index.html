@@ -8,19 +8,19 @@
 <body>
     <script>
 
-//01. FUNCTION STRUCTURE
+/*01. FUNCTION STRUCTURE
 
-// A. "function" keyword
-// B. function name(parameter1, parameter2, ... parameterN)
-// {
-// C. function code "the body"
-// }
-// function call
+ A. "function" keyword
+ B. function name(parameter1, parameter2, ... parameterN)
+ {
+ C. function code "the body"
+ }
+ function call*/
 
 
 //02. ARROW FUNCTIONS
 
-//this ...
+/*this ...
 const originals = [1, 2, 3, 72, 56, 8713];
 const doubled = originals.map(
   function doubleItem(item) {
@@ -28,11 +28,22 @@ const doubled = originals.map(
 });
 console.log(doubled);
 
-//is same as ...
-//const originals = [1, 2, 3, 72, 56, 8713];
-//const doubled = originals.map(item => item * 2);
-//console.log(doubled);
+is same as ...
+const originals = [1, 2, 3, 72, 56, 8713];
+const doubled = originals.map(item => item * 2);
+console.log(doubled); */
 
+let sum = (a, b) => a + b; //no mention of "function", curly brackets, and "return"
+
+// This arrow function is a shorter form of:
+
+let summed = function(x, y) {
+  return x + y;
+};
+
+
+alert( sum(1, 2) ); // 3
+alert( summed(1, 3) ); // 4
 
 //03. LOCAL vs GLOBAL (OUTER) VARIABLES
 
@@ -167,13 +178,18 @@ function ask2(question2, yay, nay) {
   if (confirm(question2)) yay()
   else nay();
 }
-
 ask2(
   "Do you agree?",
   function() { alert("You agreed."); }, //function() fills the required action for yay() => show an alert
   function() { alert("You canceled the execution."); } //function() fills the required action for nay() => show an alert
 );
+ /*The last expressions can be replaced by:
+ () => alert("You agreed.");,
+ () => alert("You canceled the exceution.");                      */
+
 //-----------------------------------------------------------------------------
+
+//09. FUNCTION EXPRESSIONS DECLARED OUTSIDE OF CODE BLOCK CAN BE CALLED INSIDE OF IT (FUNCTION DECLARATIONS CANNOT)
 
 let agetest = prompt("What is your age?", "");
 
@@ -181,7 +197,22 @@ let welcome = (agetest < 18) ?
     function() {alert("Hello!");} : 
     function() {alert("Greetings!");};
 
+   /*The last expressions can be replaced by:
+    () => alert("Hello!"); :
+    () => alert("Greetings!");                                */ 
+
 welcome(); // ok now#
+//-----------------------------------------------------------------------------
+function ask(question, yes, no) {
+      if (confirm(question)) yes();
+      else no();
+    }
+    
+    ask(
+      "Do you agree?",
+      () => alert("You agreed.") ,
+      () => alert("You canceled the execution.")
+      );
 
 
     </script>
