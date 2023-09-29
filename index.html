@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+//01. FUNCTION STRUCTURE
+
+// A. "function" keyword
+// B. function name(parameter1, parameter2, ... parameterN)
+// {
+// C. function code "the body"
+// }
+// function call
+
+
+//02. ARROW FUNCTIONS
+
+//this ...
+const originals = [1, 2, 3, 72, 56, 8713];
+const doubled = originals.map(
+  function doubleItem(item) {
+  return item *2;
+});
+console.log(doubled);
+
+//is same as ...
+//const originals = [1, 2, 3, 72, 56, 8713];
+//const doubled = originals.map(item => item * 2);
+//console.log(doubled);
+
+
+//03. LOCAL vs GLOBAL (OUTER) VARIABLES
+
+let userName = 'John';
+
+function showMessages() {
+  let userName = "Bob"; // declare a local variable
+
+  let message = 'Hello, ' + userName; // Bob
+  alert(message);
+}
+
+// the function will create and use its own userName
+showMessages();
+
+alert( userName ); // John, unchanged, the function did not access the outer variable
+
+//It’s a good practice to minimize the use of global variables. 
+//Modern code has few or no globals. Most variables reside in their functions. 
+//Sometimes though, they can be useful to store project-level data.
+
+function showMessage(from, text) {
+    from = '*' + from + '*'; // make the global variable "from" look nicer (global variable not defined yet)
+    alert( from + ': ' + text );
+}
+
+let from = "Ann"; //global variable "from"
+
+showMessage(from, "Hello"); // *Ann*: Hello
+
+// the value of "from" is the same, the function modified a local copy
+alert( from ); // Ann
+
+//04. RETURNING A VALUE
+
+function checkAge(age) {
+  if (age >= 18) {
+    return true;
+  } else {
+    return confirm('Do you have permission from your parents?'); //return value is boolean
+  }
+}
+
+let age = prompt('How old are you?', 18);
+
+if ( checkAge(age) ) {
+  alert( 'Access granted' ); // if >=18 OR true response on confirm message
+} else {
+  alert( 'Access denied' ); // false response on confirm message
+}
+
+//05. USING PROPER FUNCTION NAMES: BRIEF, ACCURATE, 1 ACTION
+
+function showPrimes(n) {
+
+for (let i = 2; i < n; i++) {
+  if (!isPrime(i)) continue;
+
+  alert(i);  // a prime
+}
+}
+
+function isPrime(n) {
+for (let i = 2; i < n; i++) {
+  if ( n % i == 0) return false;
+}
+return true;
+}
+
+//06. USING ? OR || TO SHORTEN FUNCTIONS
+
+function checkOld1(age) {
+  if (age > 18) {
+    return true;
+  } else {
+    return confirm('Did parents allow you?');
+  }
+}
+alert(checkOld1(19));
+//is the same as
+function checkOld2(age) {
+  return (age > 18) ? true : confirm('Did parents allow you?');
+}
+alert(checkOld2(19));
+//is same as
+function checkOld3(age) {
+  return (age > 18) || confirm('Did parents allow you?');
+}
+alert(checkOld3(19));
+
+//07. USING LOOP TO PERFORM EXPONENTIATION
+
+function pow(t, y) { //example 5 and 5
+  let results = t; //5
+
+  for (let j = 1; j < y; j++) { //start j at 1, run it (incrementally) until it is 1 less than 5 (4)
+    results *= t; //4 loops of t * t, with "results" as the product of the previous loop: loop 1 5*5, loop 2 25*5, loop 3 125*5, loop 4 625*5
+  }
+
+  return results; //final logged value of "results"
+}
+
+let t = prompt("x?", '');
+let y = prompt("n?", '');
+
+if (y < 1) {
+  alert(`Power ${y} is not supported, use a positive integer`);
+} else {
+  alert( pow(t, y) );
+}
+
+//08. CALLBACK FUNCTIONS
+
+function ask(question, yes, no) { //function declaration of function "ask" with 3 parameters: some text, positive respons yes, negative response no
+  if (confirm(question)) yes()
+  else no();
+}
+
+function showOk() {
+  alert( "You agreed." ); //show "you agreed" when OK button is chosen => will be triggered in case of "yes", showOK will be used as the argument of parameter "yes"
+}
+
+function showCancel() {
+  alert( "You canceled the execution." ); // show this message when Cancel button is chosen  => will be triggered in case of "no", showCancel will be used as the argument of parameter "no"
+}
+
+// usage: functions showOk, showCancel are passed as arguments to ask
+ask("Do you agree?", showOk, showCancel);
+//-------------------------------------------------------------------------
+//same result with function expressions
+function ask2(question2, yay, nay) {
+  if (confirm(question2)) yay()
+  else nay();
+}
+
+ask2(
+  "Do you agree?",
+  function() { alert("You agreed."); }, //function() fills the required action for yay() => show an alert
+  function() { alert("You canceled the execution."); } //function() fills the required action for nay() => show an alert
+);
+//-----------------------------------------------------------------------------
+
+let agetest = prompt("What is your age?", "");
+
+let welcome = (agetest < 18) ? 
+    function() {alert("Hello!");} : 
+    function() {alert("Greetings!");};
+
+welcome(); // ok now#
+
+
+    </script>
+</body>
+</html>
+
